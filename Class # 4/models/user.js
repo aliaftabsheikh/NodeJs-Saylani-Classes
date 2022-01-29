@@ -39,7 +39,7 @@ exports.storeAUser = async (user) => {
         user.password = await bcrypt.hash(user.password, 12)
         if (data) {
             data.push(user)
-        }else{
+        } else {
             data = [user]
         }
         await writeFile(data)
@@ -49,10 +49,25 @@ exports.storeAUser = async (user) => {
     }
 };
 
-exports.fetchAll = async()=>{
-    try{
+exports.getAUser = async (email) => {
+    try {
+        const users = await readFile()
+        const matched = users.find(u => u.email === email)
+
+        if(matched){
+            return matched;
+        }else{
+            throw new Error('User Not Found')
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+exports.fetchAll = async () => {
+    try {
         return await readFile()
-    }catch (e){
+    } catch (e) {
         console.log(e);
     }
 }

@@ -1,6 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session')
 const app = express();
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+  }))
 
 const authRoutes = require("./routes/auth");
 const productsRoutes = require("./routes/products");
